@@ -54,5 +54,5 @@ class Contract:
         # Here you would also add this contract to the appropriate lists in Author and Book instances
 
     @classmethod
-    def all_contracts(cls):
-        return sorted(cls.all, key=lambda contract: contract.date)  # This method would return a list of all Contract instances sorted by date
+    def contracts_by_date(cls, date):
+        return [contract for contract in cls.all if contract.date == date]  # This method would return a list of all Contract instances for a given date
