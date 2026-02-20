@@ -38,9 +38,22 @@ class Book:
 class Contract:
     all = []  # Class-level list to keep track of all Contract instances
     def __init__(self, author, book, date, royalties):
+        if not isinstance(author, Author):
+            raise Exception("Author must be an instance of Author class")
+        if not isinstance(book, Book):
+            raise Exception("Book must be an instance of Book class") 
+        if not isinstance(date, str):
+            raise Exception("Date must be a string")
+        if not isinstance(royalties, int):
+            raise Exception("Royalties must be a number")
         self.author = author
         self.book = book
         self.date = date
         self.royalties = royalties
         Contract.all.append(self)
         # Here you would also add this contract to the appropriate lists in Author and Book instances
+
+    @property
+    #author is an instance of Author class
+    def author_name(self):
+        return self.author.name  # Return the name of the author associated with this contract
