@@ -15,7 +15,8 @@ class Author:
     
     def sign_contract(self, book, date, royalties):
         # This method would create a new Contract instance and add it to the appropriate lists
-        contract = Contract(self, book, date, royalties)
+        new_contract = Contract(self, book, date, royalties)
+        return new_contract
 
     def total_royalties(self):
         # This method would sum up all royalties for this author's contracts
@@ -29,12 +30,11 @@ class Book:
 
     def contracts(self):
         # This method would return a list of Contract instances associated with this book
-        return [Contract() for _ in self.all_titles]  # Placeholder implementation
+        return [contract for contract in Contract.all if contract.book == self]  # Placeholder implementation
     
     def authors(self):
         # This method would return a list of author names for this book using Contract class as intermediary
-        return list(set(contract.author for contract in Contract.all if contract.book == self))  # Placeholder implementation
-
+        return list(set(contract.author for contract in self.contracts()))  # Placeholder implementation
 class Contract:
     all = []  # Class-level list to keep track of all Contract instances
     def __init__(self, author, book, date, royalties):
@@ -53,7 +53,6 @@ class Contract:
         Contract.all.append(self)
         # Here you would also add this contract to the appropriate lists in Author and Book instances
 
-    @property
-    #author is an instance of Author class
-    def author_name(self):
-        return self.author.name  # Return the name of the author associated with this contract
+    @classmethod
+    def all_contracts(cls):
+        return sorted(cls.all, key=lambda contract: contract.date)  # This method would return a list of all Contract instances sorted by date
